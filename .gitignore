@@ -1,0 +1,35 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+
+# Output of the go coverage tool
+*.out
+
+# Project-specific
+bin/
+pkg/
+tmp/
+
+# Dependency directories
+vendor/
+
+# VS Code directory
+.vscode/
+
+# Docker related
+.dockerignore
+Dockerfile
+
+# Environment files
+.env
+
+# IDE specific files & misc
+.idea/
+*.swp
+*.iml
+*.log
+*.DS_Store

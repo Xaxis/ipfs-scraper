@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  scraper:
+    build: .
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASS: password
+      DB_NAME: ipfs_scraper
+    ports:
+      - "8080:8080"
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: ipfs_scraper
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
