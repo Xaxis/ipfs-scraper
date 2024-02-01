@@ -4,27 +4,25 @@ FROM golang:1.21
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy the go.mod file to download dependencies
-COPY go.mod tools.go ./
-
-# Download dependencies
+# Copy the go.mod and go.sum files and download the dependencies
+COPY go.mod go.sum ./
 RUN go mod download
 
-# Tidy up the module dependencies and generate go.sum
-RUN go mod tidy
-
-# Install dependencies, including those specified in tools.go
-RUN go install github.com/cosmtrek/air@latest
-
-# Build the application
-#RUN go build -o scraper ./cmd/scraper
-#RUN go build -o api ./cmd/api
-
-# Copy the source code into the container
+# Copy the rest of the source code
 COPY . .
 
-# The command to run air live reloader
-CMD ["air"]
+# Build the application
+RUN go build -o scraper ./cmd/scraper
+RUN ls -la ./cmd/scraper
 
-# Command to run the executable
-#CMD ["./api"]
+# Make the binary executable
+RUN chmod +x scraper
+
+# List files in /app for debugging
+RUN ls -la
+
+# Simple echo command to test CMD functionality
+CMD echo "Scraper binary exists in /app and Docker CMD is working"
+CMD pwd
+CMD ls -la
+CMD ["./scraper"]
