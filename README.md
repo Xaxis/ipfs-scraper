@@ -44,3 +44,19 @@
    ```bash
    docker-compose up --build
    ```
+   
+## Verifying the Scraper and API Server are Working
+
+1. **Query the API**
+    - You can view the logs of the running containers by running the following command:
+      ```bash
+      curl http://localhost:8080/tokens
+      curl http://localhost:8080/tokens/bafkreiekw2qbsfx7s7lyzcoabyskdpheteab3ogzzcrxboqzydv6fqhix4
+      ```
+    - Or of course you can use your browser to access the API.
+      
+2. **View the Logs**
+   - You can view the logs of the running containers by running the following command:
+     ```bash
+     docker-compose logs -f
+     ```
