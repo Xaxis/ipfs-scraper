@@ -4,8 +4,10 @@ FROM golang:1.21
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy the go.mod and go.sum files and download the dependencies
+# Copy the go.mod and go.sum files
 COPY go.mod go.sum ./
+
+# Download the dependencies
 RUN go mod download
 
 # Copy the rest of the source code

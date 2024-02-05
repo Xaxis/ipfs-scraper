@@ -32,7 +32,7 @@ func (s *Scraper) Scrape() {
 			continue
 		}
 
-		metadata, err := ParseRawJSONToIPFSMetadata(rawData)
+		metadata, err := ParseRawJSONToIPFSMetadata(rawData, cid)
 		if err != nil {
 			log.Printf("Failed to parse metadata for CID %s: %s", cid, err)
 			continue
@@ -41,6 +41,8 @@ func (s *Scraper) Scrape() {
 		err = s.db.SaveMetaData(metadata)
 		if err != nil {
 			log.Printf("Failed to save metadata for CID %s: %s", cid, err)
+		} else {
+			log.Printf("Successfully saved metadata for CID %s", cid)
 		}
 	}
 }

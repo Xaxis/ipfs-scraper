@@ -5,7 +5,7 @@
 ## Prerequisites
 - Docker and Docker Compose installed on your system.
 
-## Steps to Run
+## Steps to Run (First Time)
 
 1. **Clone the Repository** (optional if you have the project files)
    ```bash
@@ -31,4 +31,16 @@
 5. **Shutting Down**
    ```bash
    docker-compose down
+   ```
+   
+## Steps to Run (Subsequent Times)
+
+1. **Clear volumes** (run this if you want to start fresh)
+   ```bash
+   docker-compose down -v
+   ```
+   
+2. **Start the Containers**
+   ```bash
+   docker-compose up
    ```

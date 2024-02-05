@@ -2,6 +2,7 @@ package scraper
 
 import (
 	"database/sql"
+	_ "github.com/lib/pq"
 )
 
 type Database struct {
@@ -26,6 +27,19 @@ func NewDatabase(dataSourceName string) (*Database, error) {
 // SaveMetaData saves an IPFSMetadata instance into the database
 func (db *Database) SaveMetaData(metadata *IPFSMetadata) error {
 	query := `INSERT INTO metadata (CID, Name, Description, ImageURL) VALUES ($1, $2, $3, $4)`
-	_, err := db.Exec(query, metadata.CID, metadata.Name, metadata.Description, metadata.ImageURL)
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+
+	_, err = stmt.Exec(metadata.CID, metadata.Name, metadata.Description, metadata.ImageURL)
 	return err
 }
+
+// Modified version of SaveMetaData to prevent duplicate entries
+//func (db *Database) SaveMetaData(metadata *IPFSMetadata) error {
+//	query := `INSERT INTO metadata (CID, Name, Description, ImageURL) VALUES ($1, $2, $3, $4) ON CONFLICT (CID) DO NOTHING`
+//	_, err := db.Exec(query, metadata.CID, metadata.Name, metadata.Description, metadata.ImageURL)
+//	return err
+//}
