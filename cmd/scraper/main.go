@@ -6,6 +6,7 @@ import (
 	"os"
 	"time"
 
+	db "github.com/Xaxis/ipfs-scraper/internal/db"
 	sc "github.com/Xaxis/ipfs-scraper/internal/scraper"
 )
 
@@ -19,31 +20,30 @@ func main() {
 	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
 		dbHost, dbPort, dbUser, dbPass, dbName)
 
-	var db *sc.Database
+	var dbInstance *db.Database
 	var err error
 
-	// Attempt to connect to the database with retries
+	// Attempt to connect to the db with retries
 	for attempt := 1; attempt <= 5; attempt++ {
-		db, err = sc.NewDatabase(dsn)
+		dbInstance, err = db.NewDatabase(dsn)
 		if err != nil {
-			log.Printf("Failed to connect to database: %v. Retrying in 5 seconds...", err)
+			log.Printf("Failed to connect to db: %v. Retrying in 5 seconds...", err)
 			time.Sleep(5 * time.Second)
 			continue
 		}
 		break
 	}
 
-	// Check if the database connection was successful
+	// Check if the db connection was successful
 	if err != nil {
-		log.Fatalf("Error connecting to database after retries: %v", err)
+		log.Fatalf("Error connecting to db after retries: %v", err)
 	}
 
-	defer db.Close()
+	defer dbInstance.Close()
 
-	// Proceed with the rest of your application logic
+	// Run scraper instance using CIDs from the csv file
 	ipfsScraper := sc.NewFetcher()
 	csvFile := "./data/ipfs_cids.csv"
-
-	s := sc.NewScraper(ipfsScraper, db, csvFile)
+	s := sc.NewScraper(ipfsScraper, dbInstance, csvFile)
 	s.Scrape()
 }

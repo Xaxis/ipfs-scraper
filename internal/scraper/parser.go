@@ -8,6 +8,8 @@ import (
 	"os"
 	"regexp"
 	"strings"
+
+	"github.com/Xaxis/ipfs-scraper/internal/db"
 )
 
 // ParseCSV parses a CSV file and returns a slice of IPFS CIDs.
@@ -51,7 +53,7 @@ func validateCID(cid string) bool {
 }
 
 // ParseRawJSONToIPFSMetadata parses a raw JSON metadata string and returns the corresponding IPFSMetadata instance
-func ParseRawJSONToIPFSMetadata(rawJSON string, cid string) (*IPFSMetadata, error) {
+func ParseRawJSONToIPFSMetadata(rawJSON string, cid string) (*db.IPFSMetadata, error) {
 	var temp map[string]interface{}
 	err := json.Unmarshal([]byte(rawJSON), &temp)
 	if err != nil {
@@ -74,6 +76,6 @@ func ParseRawJSONToIPFSMetadata(rawJSON string, cid string) (*IPFSMetadata, erro
 	}
 
 	// Use NewIPFSMetadata to create and return the metadata instance
-	metadata := NewIPFSMetadata(cid, name, description, imageURL)
+	metadata := db.NewIPFSMetadata(cid, name, description, imageURL)
 	return metadata, nil
 }

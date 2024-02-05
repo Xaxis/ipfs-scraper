@@ -1,4 +1,4 @@
-package scraper
+package db
 
 type IPFSMetadata struct {
 	CID         string `json:"cid"`

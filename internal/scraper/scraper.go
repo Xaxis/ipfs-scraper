@@ -2,15 +2,17 @@ package scraper
 
 import (
 	"log"
+
+	"github.com/Xaxis/ipfs-scraper/internal/db"
 )
 
 type Scraper struct {
 	ipfsScraper *Fetcher
 	csvFile     string
-	db          *Database
+	db          *db.Database
 }
 
-func NewScraper(ipfsScraper *Fetcher, db *Database, csvFile string) *Scraper {
+func NewScraper(ipfsScraper *Fetcher, db *db.Database, csvFile string) *Scraper {
 	return &Scraper{
 		ipfsScraper: ipfsScraper,
 		db:          db,
