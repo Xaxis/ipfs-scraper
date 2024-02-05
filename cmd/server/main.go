@@ -20,13 +20,13 @@ func main() {
 
 	// Initialize the db. SHOULDN'T need to retry because our start.sh order, in combination with scraper retries,
 	//should ensure the db is up.
-	db, err := db.NewDatabase(dsn)
+	dbInstance, err := db.NewDatabase(dsn)
 	if err != nil {
 		log.Fatalf("Failed to initialize the db: %v", err)
 	}
 
 	// Create a new server instance
-	apiServer := server.NewServer(db)
+	apiServer := server.NewServer(dbInstance)
 
 	// Start the API server
 	apiServer.Start(":8080")

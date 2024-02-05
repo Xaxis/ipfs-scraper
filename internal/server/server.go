@@ -3,6 +3,7 @@ package server
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"github.com/Xaxis/ipfs-scraper/internal/db"
 	"github.com/gorilla/mux"
 	"log"
@@ -15,6 +16,14 @@ import (
 
 type Server struct {
 	DB *db.Database
+}
+
+type ErrorResponse struct {
+	Error string `json:"error"`
+}
+
+type TokensResponse struct {
+	Tokens []db.IPFSMetadata `json:"tokens"`
 }
 
 func NewServer(db *db.Database) *Server {
@@ -69,10 +78,13 @@ func (s *Server) handleTokens() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		tokens, err := s.DB.GetAllTokens()
 		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+			log.Printf("Error fetching tokens: %v", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			json.NewEncoder(w).Encode(ErrorResponse{Error: "Internal Server Error"})
 			return
 		}
-		json.NewEncoder(w).Encode(tokens)
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(TokensResponse{Tokens: tokens})
 	}
 }
 
@@ -83,9 +95,12 @@ func (s *Server) handleTokenByCID() http.HandlerFunc {
 		cid := vars["cid"]
 		token, err := s.DB.GetTokenByCID(cid)
 		if err != nil {
-			http.Error(w, err.Error(), http.StatusNotFound)
+			log.Printf("Error fetching token by CID %s: %v", cid, err)
+			w.WriteHeader(http.StatusNotFound)
+			json.NewEncoder(w).Encode(ErrorResponse{Error: fmt.Sprintf("Token not found for CID: %s", cid)})
 			return
 		}
+		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(token)
 	}
 }

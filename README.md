@@ -1,6 +1,6 @@
 # ipfs-scraper
 
-# Setting up Docker and Running the Application
+# Setting up Docker and Running the App
 
 ## Prerequisites
 - Docker and Docker Compose installed on your system.
@@ -42,5 +42,5 @@
    
 2. **Start the Containers**
    ```bash
-   docker-compose up
+   docker-compose up --build
    ```

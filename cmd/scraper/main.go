@@ -6,7 +6,7 @@ import (
 	"os"
 	"time"
 
-	db "github.com/Xaxis/ipfs-scraper/internal/db"
+	"github.com/Xaxis/ipfs-scraper/internal/db"
 	sc "github.com/Xaxis/ipfs-scraper/internal/scraper"
 )
 
@@ -17,8 +17,8 @@ func main() {
 	dbPass := os.Getenv("DB_PASS")
 	dbName := os.Getenv("DB_NAME")
 
-	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
-		dbHost, dbPort, dbUser, dbPass, dbName)
+	// Construct DSN from environment variables
+	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", dbHost, dbPort, dbUser, dbPass, dbName)
 
 	var dbInstance *db.Database
 	var err error
