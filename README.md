@@ -2,6 +2,7 @@
 
 ## Prerequisites
 - Docker and Docker Compose installed on your system.
+- The Docker daemon must be running.
 
 ## Steps to Run (First Time)
 
