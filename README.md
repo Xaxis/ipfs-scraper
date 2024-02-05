@@ -1,7 +1,5 @@
 # ipfs-scraper
 
-# Setting up Docker and Running the App
-
 ## Prerequisites
 - Docker and Docker Compose installed on your system.
 
@@ -19,16 +17,10 @@
     ```
    
 3. **Verify the Application is Running**
-   - Ensure that both the application and database containers are running.
-   - The API will be accessible at http://localhost:8080.
+   - Ensure that both the application and database containers are running by looking at the CLI output.
+   - The API will be accessible at http://localhost:8080 (if you get a 404 message, it's working!).
 
-4. **Interact with the Database**
-   - The database is accessible at `localhost:5432` with the following credentials:
-     - Username: `postgres`
-     - Password: `password`
-     - Database: `ipfs_scraper`
-
-5. **Shutting Down**
+4. **Shutting Down**
    ```bash
    docker-compose down
    ```
@@ -60,3 +52,9 @@
      ```bash
      docker-compose logs -f
      ```
+     
+## Examples of the Scraper and API Server Running
+
+![Scraper Logs](data/screenshot-2.png)
+![Server API 1](data/screenshot-1.png)
+![Server API 2](data/screenshot-3.png)
