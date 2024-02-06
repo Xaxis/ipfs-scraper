@@ -40,13 +40,17 @@
    
 ## Verifying the Scraper and API Server are Working
 
-1. **Query the API**
-    - You can view the logs of the running containers by running the following command:
+1. **Query the API Server**
+    - You can test the API server by using `curl` or use Postman if you want to get fancy:
       ```bash
       curl http://localhost:8080/tokens
       curl http://localhost:8080/tokens/bafkreiekw2qbsfx7s7lyzcoabyskdpheteab3ogzzcrxboqzydv6fqhix4
       ```
-    - Or of course you can use your browser to access the API.
+    - Or of course you can always just use a good ol' fashioned web browser too.
+      ```bash
+      http://localhost:8080/tokens
+      http://localhost:8080/tokens/bafkreiekw2qbsfx7s7lyzcoabyskdpheteab3ogzzcrxboqzydv6fqhix4
+      ```
       
 2. **View the Logs**
    - You can view the logs of the running containers by running the following command:
